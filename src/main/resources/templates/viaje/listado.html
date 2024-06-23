@@ -1,0 +1,60 @@
+<!-- Vista principal: Listado de viajes -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${infoMessage}" th:text="${infoMessage}"></div>
+<div class="header">
+    <img src="/images/batbatcar.png">
+    <p>Aplicación Bat Bat Car v2</p>
+</div>
+<div>
+    <h3><strong>Listado de Viajes</strong></h3>
+</div>
+<table>
+
+    <tr>
+        <th scope="col">Cod. Viaje</th>
+        <th scope="col">Ruta</th>
+        <th scope="col">Propietario</th>
+        <th scope="col">Fecha y hora de salida</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Reservas</th>
+        <th scope="col">Reservas realizadas</th>
+        <th scope="col">Reservas disponibles</th>
+        <th scope="col">Acciones</th>
+    </tr>
+    <tbody>
+    <tr th:each="viaje: ${viajes}">
+        <td th:text="${viaje.getCodViaje()}"></td>
+        <td th:text="${viaje.getRuta()}"></td>
+        <td th:text="${viaje.getPropietario()}"></td>
+        <td th:text="${#temporals.format(viaje.getFechaSalida(), 'dd-MM-yyyy ''a las'' HH:mm')}"></td>
+        <td th:classappend="${(viaje.estaDisponible()) ? 'abierto':'cerrado'}" th:text="${viaje.getEstado()}" style="color: white"></td>
+        <td>
+            <span th:if="${viaje.seHanRealizadoReservas}">Sí</span>
+            <span th:unless="${viaje.seHanRealizadoReservas}">No</span>
+        </td>
+        <td th:text="${viaje.numReservas}"></td>
+        <td th:text="${viaje.plazasDisponibles()}"></td>
+        <td>
+                <span th:if="${viaje.estaDisponible()}">
+                    <a th:href="@{/viaje/reserva/add(codViaje=${viaje.codViaje})}">Reservar</a>
+                </span>
+            <a th:href="@{/viaje(codViaje=${viaje.codViaje})}">Ver Detalle</a>
+            <span th:if="${viaje.seHanRealizadoReservas}">
+                    <a th:href="@{/viaje/reservas(codViaje=${viaje.codViaje})}" >Ver Reservas</a>
+                </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="@{/viaje/add}"><button type="button" value="Añadir viaje">Añadir viaje</button></a>
+</body>
+</html>

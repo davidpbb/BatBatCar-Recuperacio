@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Detalle Reserva</title>
+</head>
+<body>
+<div>
+    <h1>Detalle Reserva con codigo <span th:text="${reservas.codigoReserva}"></span></h1>
+    <form method="get" action="/viaje/reservas"></form>
+    <input name="reservas" type="hidden" th:value="${codViaje}"/>
+    <ul>
+        <li>
+            <label>Cod. Reserva <input name="codigoReserva" type="text" th:value="${reservas.codigoReserva}" readonly></label><br>
+        </li>
+        <li>
+            <label>Usuario <input name="usuario" type="text" th:value="${reservas.usuario}" readonly></label><br>
+        </li>
+        <li>
+            <label>Plazas Solicitadas <input name="plazasSolicitadas" type="text" th:value="${reservas.plazasSolicitadas}" readonly></label><br>
+        </li>
+        <li>
+            <label>Fecha y Hora de salida <input name="fechaRealizacion" type="text" th:value="${#temporals.format(reservas.viaje.fechaSalida, 'dd/MM/yyyy HH:mm')}" readonly></label><br>
+        </li>
+    </ul>
+    <a th:href="@{/viajes}">Volver al listado de viajes</a>
+    <br>
+</div>
+</body>
+</html>

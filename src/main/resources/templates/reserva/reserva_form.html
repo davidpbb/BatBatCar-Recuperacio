@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Insertar Reserva</title>
+</head>
+<body>
+<h1>Agregar Reserva al viaje <span th:text="${codViaje}"></span></h1>
+<div th:if="${errores}">
+    <p th:each="error : ${errores}">
+        <strong th:text="${error.clave}"></strong>
+        <span th:text="${error.valor}"></span>
+    </p>
+</div>
+<form action="/viaje/reserva/add" method="post">
+    <input name="codViaje" type="hidden" th:value="${codViaje}"/>
+    <label>Usuario <input name="usuario" type="text" required></label><br>
+    <label>Plazas solicitadas <input name="plazasSolicitadas" type="number" required></label><br>
+    <br>
+    <input type="submit" value="Añadir" required>
+    <a th:href="@{/viajes}">Volver al listado de viajes</a>
+</form>
+</body>
+</html>

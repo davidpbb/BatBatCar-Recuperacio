@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div>
+    <h4><b>Cabecera</b> - Añadir Viaje</h4>
+</div>
+<div th:if="${errors}">
+    <p th:each="error : ${errors}">
+        <strong th:text="${error.key}"></strong>
+        <span th:text="${error.value}"></span>
+    </p>
+</div>
+<div th:if="${infoMessage}">
+    <p th:text="${infoMessage}"></p>
+</div>
+
+<form th:action="@{/viaje/add}" method="POST">
+
+    <label>Ruta
+        <input type="text" name="ruta" placeholder="ciudad_inicio-ciudad_destino..." style="width: 500px" required>
+    </label><br>
+    <label>Plazas ofertadas
+        <input type="number" name="plazasOfertadas" style="width: 50px" min="1" max="6" required>
+    </label><br>
+    <label>Propietario
+        <input type="text" name="propietario" placeholder="Introduzca nombre y apellidos..." style="width: 250px" pattern="^[A-Z][a-zA-Z]+\s{1}[A-Z][a-zA-Z]+$" required>
+    </label><br>
+    <label>Precio
+        <input type="number" name="precio" style="width: 50px" min="0.1" step="0.1" required>
+    </label>
+    <label>Duracion aproximada (min)
+        <input type="number" name="duracion" style="width: 50px" min="1" required>
+    </label><br>
+    <label>Dia de salida
+        <input type="date" name="fecha" style="width: 150px" required>
+    </label>
+    <label>Hora de salida
+        <input type="time" name="hora" placeholder="HH" style="width: 25px" required>
+    </label><br>
+    <input type="submit" value="Añadir">
+    <a href="/viajes"><button type="button">Cancelar (Volver al listado)</button></a>
+</form>
+
+
+
+
+
+
+
+
+</body>
+</html>

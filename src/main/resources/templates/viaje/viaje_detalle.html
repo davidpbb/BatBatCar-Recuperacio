@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Detalles del Viaje</title>
+</head>
+<body>
+<div class="header">
+    <p>Aplicación Bat Bat Car</p>
+</div>
+
+<div>
+    <h1>Detalle Viaje (<span th:text="${viaje.getCodViaje()}"></span>)</h1>
+
+    <ul>
+        <label>Ruta: <input name="ruta" type="text" th:value="${viaje.ruta}" readonly></label>
+        <label>Propietario: <input name="propietario" type="text" th:value="${viaje.propietario}" readonly></label>
+        <label>Día de Salida: <input name="fecha" type="date" th:value="${viaje.getFechaDia()}" readonly></label>
+        <label>Hora de Salida: <input name="hora" type="time" th:value="${viaje.getFechaHora()}" readonly></label>
+        <label>Plazas Ofertadas: <input name="plazasOfertadas" type="number" th:value="${viaje.plazasOfertadas}" readonly></label>
+        <label>Precio (€): <input name="precio" type="number" th:value="${viaje.precio}" readonly></label>
+        <label>Duración aproximada (min): <input name="duracion" type="number" th:value="${viaje.duracion}" readonly></label>
+    </ul>
+
+    <div>
+        <h2>Lista de Reservas</h2>
+        <table>
+
+            <tr>
+                <th>Cod. Reserva</th>
+                <th>Usuario</th>
+                <th>Plazas Solicitadas</th>
+                <th>Fecha y Hora de salida</th>
+                <th>Acciones</th>
+            </tr>
+            <tbody>
+            <tr th:each="reserva : ${reservas}">
+                <td th:text="${reserva.codigoReserva}"></td>
+                <td th:text="${reserva.usuario}"></td>
+                <td th:text="${reserva.plazasSolicitadas}"></td>
+                <td th:text="${#temporals.format(reserva.viaje.fechaSalida, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <form th:action="@{/viaje/reserva/cancelar}" method="post">
+                        <input type="hidden" name="codigoReserva" th:value="${reserva.codigoReserva}"/>
+                        <button type="submit" style="background: red !important;">Cancelar</button>
+                    </form>
+                    <a th:href="@{/reserva(codigoReserva=${reserva.codigoReserva})}">Ver Detalle</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <div>
+        <div>
+            <a th:href="@{/viajes}">Volver al listado</a>
+            <div>
+                <button type="submit">Cancelar Viaje</button>
+                <a th:href="@{/viaje/add}">Añadir Reserva</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
